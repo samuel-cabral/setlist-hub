@@ -1,0 +1,25 @@
+<section>
+  <h2>Nova musica</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input formControlName="title" placeholder="Titulo" />
+    <input formControlName="artist" placeholder="Artista" />
+    <input formControlName="key" placeholder="Tom (ex: G)" size="6" />
+    <input formControlName="bpm" type="number" placeholder="BPM" />
+    <button type="submit" [disabled]="form.invalid">Adicionar</button>
+  </form>
+  @if (songsService.error(); as error) {
+    <p class="error">{{ error }}</p>
+  }
+</section>
+
+<section>
+  <h2>Musicas</h2>
+  @for (song of songsService.songs(); track song.id) {
+    <article>
+      <strong>{{ song.title }}</strong> - {{ song.artist }}
+      <span class="meta">Tom {{ song.key }} / {{ song.bpm }} BPM</span>
+    </article>
+  } @empty {
+    <p>Nenhuma musica cadastrada ainda.</p>
+  }
+</section>
